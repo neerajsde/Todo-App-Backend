@@ -15,13 +15,15 @@ exports.addPendingTask = async (req, res) => {
             { new: true } // To return the updated user document
         );
 
+        const userData = await user.findById({_id:id});
+
         console.log("Inserted Successfully");
-        console.log(updatedUser);
+        console.log(userData);
 
         res.status(200).json({
             success: true,
             message: "New task added successfully",
-            user: updatedUser // Return the updated user document if needed
+            user: userData
         });
     } catch (err) {
         console.error("Error:", err);
