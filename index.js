@@ -9,6 +9,9 @@ app.use(express.json());
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+const cors = require('cors');
+app.use(cors());
+
 // Define your default route handler before other routes
 app.get('/', (req, res) => {
     res.send('<h1>Hello Ji This is Home Page</h1>');
