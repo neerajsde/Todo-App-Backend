@@ -8,7 +8,10 @@ exports.deleteTask = async (req, res) => {
             { _id: id },
             { $pull: { pendingTask: { id: task_id } } },
             { new: true }
-        );
+        )
+        .populate("pendingTask")
+        .populate("completedTask")
+        .exec();
         
         if (!updatedUser) {
             return res.status(404).json({

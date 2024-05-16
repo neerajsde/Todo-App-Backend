@@ -122,7 +122,8 @@ exports.logIn = async(req, res) => {
         }
 
         let OneUser = await user.findOne({email})
-        .populate("pendingTask", "completedTask")
+        .populate("pendingTask")
+        .populate("completedTask")
         .exec();
 
         try{

@@ -15,6 +15,7 @@ exports.addPendingTask = async (req, res) => {
             { new: true } // To return the updated user document
         )
         .populate("pendingTask")
+        .populate("completedTask")
         .exec();
 
         // const userData = await user.findById({_id:id});
