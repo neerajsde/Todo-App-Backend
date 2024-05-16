@@ -121,7 +121,9 @@ exports.logIn = async(req, res) => {
             })
         }
 
-        let OneUser = await user.findOne({email});
+        let OneUser = await user.findOne({email})
+        .populate("pendingTask", "completedTask")
+        .exec();
 
         try{
             const isVaildPass = await bcrypt.compare(password, OneUser.password);
@@ -171,7 +173,7 @@ exports.logIn = async(req, res) => {
         console.log({
             sucess:true,
             token:token,
-            OneUser,
+            user:OneUser,
             message:"User Loged In sucessfully"
         });
     }

@@ -13,17 +13,19 @@ exports.addPendingTask = async (req, res) => {
             {_id:id}, // Assuming 'id' is the user's ID
             { $push: { pendingTask: newPendingTask } }, // Use $push to add the new task to pendingTasks array
             { new: true } // To return the updated user document
-        );
+        )
+        .populate("pendingTask")
+        .exec();
 
-        const userData = await user.findById({_id:id});
+        // const userData = await user.findById({_id:id});
 
         console.log("Inserted Successfully");
-        console.log(userData);
+        console.log(updatedUser);
 
         res.status(200).json({
             success: true,
             message: "New task added successfully",
-            user: userData
+            user: updatedUser
         });
     } catch (err) {
         console.error("Error:", err);

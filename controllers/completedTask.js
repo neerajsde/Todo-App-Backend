@@ -13,7 +13,9 @@ exports.addCompletedTask = async (req, res) => {
             {_id:id}, // Assuming 'id' is the user's ID
             { $push: { completedTask: completedTask } }, // Use $push to add the new task to pendingTasks array
             { new: true } // To return the updated user document
-        );
+        )
+        .populate("pendingTask", "completedTask")
+        .exec();
 
         console.log("Inserted Successfully");
         console.log(updatedUser);
