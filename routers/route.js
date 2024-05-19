@@ -10,7 +10,7 @@ const {deleteTask} = require('../controllers/deleteTask');
 const {editTask} = require('../controllers/editTask');
 
 router.post('/create/user', createNewUser);
-router.post('/login', logIn);
+router.post('/login',auth, logIn);
 router.post('/pendingTask/add', addPendingTask);
 router.post('/completedTask', addCompletedTask);
 router.delete('/deleteTask', deleteTask);
