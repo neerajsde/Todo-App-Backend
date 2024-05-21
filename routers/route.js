@@ -8,6 +8,7 @@ const { addPendingTask } = require('../controllers/addTask');
 const { addCompletedTask } = require('../controllers/completedTask');
 const {deleteTask} = require('../controllers/deleteTask');
 const {editTask} = require('../controllers/editTask');
+const {sendOTP} = require('../controllers/sendOTP');
 
 router.post('/create/user', createNewUser);
 router.post('/login', logIn);
@@ -15,6 +16,7 @@ router.post('/pendingTask/add', addPendingTask);
 router.post('/completedTask', addCompletedTask);
 router.delete('/deleteTask', deleteTask);
 router.put('/editTask', editTask);
+router.post('/send-otp', sendOTP);
 
 router.get('/user', auth, logIn);
 
