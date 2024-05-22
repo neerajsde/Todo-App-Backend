@@ -74,6 +74,7 @@ exports.sendOTP = async(req, res) => {
         await transporter.sendMail(mailOptions);
         res.status(200).json({
             success: true,
+            otp:otp,
             message: 'OTP sent successfully'
         });
     } catch (error) {
