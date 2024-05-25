@@ -1,6 +1,7 @@
 const user = require('../models/signup');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 // vaidate email id
@@ -72,6 +73,41 @@ exports.createNewUser = async(req, res) => {
             })
         }
 
+        // send mail
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            secure: true,
+            port: 465,
+            auth: {
+                user: process.env.EMAIL_USER, // your Gmail address from environment variable
+                pass: process.env.EMAIL_PASS // your Gmail password from environment variable
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Todo App - Registration Successful',
+            text: `Dear ${name},
+        
+        Thank you for registering with Todo App! We are excited to have you on board.
+        
+        With Todo App, you can effortlessly manage your tasks and stay organized. Here are some features you can enjoy:
+        - Create and manage your to-do lists
+        - Set deadlines and reminders
+        - Track your progress
+        - Collaborate with others
+        
+        If you have any questions or need assistance, feel free to reach out to our support team at neerajprajapatisde@gmail.com
+        
+        We hope you have a productive and enjoyable experience using Todo App!
+        
+        Best regards,
+        The Todo App Team`
+        };
+        
+        console.log("Mail Options:", mailOptions); 
+
         const newUser = await user.create({
             name: name,
             age: age,
@@ -79,6 +115,7 @@ exports.createNewUser = async(req, res) => {
             password: hashPassword
         });
 
+        await transporter.sendMail(mailOptions);
         res.status(200).json({
             sucess:true,
             user:newUser,
